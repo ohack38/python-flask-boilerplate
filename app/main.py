@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, jsonify
 from dotenv import load_dotenv
 
 # Load variables from .env
@@ -9,6 +9,8 @@ print(os.environ.get('HELLO'))
 # Create Flask instance
 app = Flask(__name__)
 
+app.config['JSON_AS_ASCII'] = False
+
 # Default route to /
 @app.route("/")
 def index():
@@ -16,4 +18,4 @@ def index():
 
 # Run app if called directly
 if __name__ == "__main__":
-        app.run()    
+    app.run()    
