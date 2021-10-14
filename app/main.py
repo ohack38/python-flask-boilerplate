@@ -1,3 +1,4 @@
+from datetime import date
 import os, requests, json
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
@@ -16,7 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-auth_token = os.environ.get('AUTH_TOKEN')
+auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTUyMDU3MGU2NjI4ZjUxZDY5ODg4MGUiLCJlbWFpbCI6InRvbW15c2hlbGJ5QGRvZS5jb20iLCJpYXQiOjE2MzQyMDM2OTUsImV4cCI6MTYzNDI5MDA5NX0.4G9uwdmEICXX8Wa6GYC9fLBy9Ud19qs9jo4IabezpaM'
 
 class Services(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -39,7 +40,7 @@ def services():
     ret = []
     if request.method == 'GET':
         for service in Services.query.all():
-            ret.append({'service': service.service})
+            ret.append({'id': service.id, 'service': service.service})
     
     if request.method == 'POST':
         try:
@@ -53,12 +54,35 @@ def services():
             return e
     return jsonify(ret)
 
+@app.route("/services/<id>", methods = ['PUT', 'DELETE'])
+def filtered_services(id):
+    ret = []
+    if request.method == 'PUT':
+        body = request.get_json()
+        if not body['service']:
+            return { 'error': 'Bad Request'}, 400
+        update_service = Services.query.filter_by(id=id).first_or_404()
+        update_service.service = body['service']
+        db.session.commit()
+        ret =[{ 'service': update_service.service}]
+
+
+
+    if request.method == 'DELETE':
+        delete_service = Services.query.filter_by(id=id).first_or_404()
+        db.session.delete(delete_service)
+        db.session.commit()
+        ret = ['Successfully deleted service!']
+    
+    return jsonify(ret)
+
 @app.route("/orders", methods = ['GET', 'POST'])
 def orders():
     ret = []
+    
     if request.method == 'GET':
         for order in Orders.query.all():
-            ret.append({'service': order.service, 'cabin_id': order.cabin_id, 'date': order.date})
+            ret.append({'id': order.id ,'service': order.service, 'cabin_id': order.cabin_id, 'date': order.date})
     
     if request.method == 'POST':
         try:
@@ -66,21 +90,50 @@ def orders():
             url = 'https://moln-node.azurewebsites.net/cabins/owned/{}'.format(body['cabin_id'])
             header = { 'Authorization': 'Bearer {}'.format(auth_token)}
             response = requests.get(url, headers=header)
-            print(response)
+            
             services = []
             for s in Services.query.filter_by(service=body['service']):
                 services.append(s.service)
-            if len(services) < 0 and len(response) < 0:
-                new_order = Orders(service=body['service'], cabin_id=body['cabin_id'])
+
+            if body['cabin_id'] in response.json().values() and len(services)>0:
+                new_order = Orders(service=body['service'], cabin_id=body['cabin_id'], date=body['date'])
                 db.session.add(new_order)
                 db.session.commit()
-            
+                ret = ['Service ordered']
 
-            ret = ['Added new service!']
         except Exception as e:
             return e
+
     return jsonify(ret)
 
+@app.route("/orders/<id>", methods = ['PUT', 'DELETE'])
+def filtered_orders(id):
+    ret = []
+  
+    if request.method == 'PUT':
+        body = request.get_json()
+        update_order = Orders.query.filter_by(id=id).first_or_404()
+        if body['service']:
+            filtered_service = Services.query.filter_by(service=body['service']).first()
+            if filtered_service is not None:
+                update_order.service = body['service']
+            
+
+        if body['date']:
+            print(body['date'])
+            update_order.date = body['date']
+        
+        db.session.commit()            
+        ret =[{ 'service': update_order.service, 'date': update_order.date}]
+  
+    if request.method == 'DELETE':
+        delete_service = Orders.query.filter_by(id=id).first_or_404()
+        db.session.delete(delete_service)
+        db.session.commit()
+        ret = ['Successfully deleted service!']
+    
+    return jsonify(ret)
+    
 
 @app.route("/cabins")
 def cabins():
