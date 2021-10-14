@@ -1,4 +1,50 @@
-@remoteUrl=http://127.0.0.1:5000/
+//@baseUrl=https://sheltered-beach-83949.herokuapp.com/
+@nodeProdUrl=https://moln-node.azurewebsites.net
+@nodeUrl=http://localhost:3000
+@baseUrl=http://127.0.0.1:5000
 
 ###
-GET {{remoteUrl}}
+GET {{nodeUrl}}
+
+###login
+POST {{nodeUrl}}/users/login
+Content-Type: application/json
+
+{
+    "email": "tommyshelby@doe.com",
+    "password": "Password123"
+}
+
+###
+POST {{baseUrl}}
+Content-Type: application/json
+
+{
+    "username": "jimhalpert",
+    "email": "jim@office.com"
+}
+
+###TEST
+GET http://127.0.0.1:5000/cabins
+
+###SERVICES
+GET {{baseUrl}}/services
+
+###
+POST {{baseUrl}}/services
+Content-Type: application/json
+
+{
+    "service": "lawn mowing"
+}
+
+###ORDERS
+GET {{baseUrl}}/orders
+
+###
+POST {{baseUrl}}/orders
+Content-Type: application/json
+
+{
+    
+}

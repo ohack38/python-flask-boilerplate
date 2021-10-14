@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "ec2-52-87-123-108.compute-1.amazonaws.com",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "connectString": "postgresql://iwecuwxblhfsqp:0a00edd8ddfb5a065ee25cadc5e808891659a04d3298725bb08b11ec485be7f9@ec2-52-87-123-108.compute-1.amazonaws.com:5432/d8ohjk8r38o452",
+            "name": "heroku-postgres",
+            "database": "d8ohjk8r38o452",
+            "username": "wecuwxblhfsqp",
+            "password": "0a00edd8ddfb5a065ee25cadc5e808891659a04d3298725bb08b11ec485be7f9"
+        }
+    ]
+}
