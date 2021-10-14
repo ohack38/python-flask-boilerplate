@@ -11,5 +11,6 @@
             "username": "wecuwxblhfsqp",
             "password": "0a00edd8ddfb5a065ee25cadc5e808891659a04d3298725bb08b11ec485be7f9"
         }
-    ]
+    ],
+    "appService.showBuildDuringDeployPrompt": false
 }
