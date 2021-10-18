@@ -43,7 +43,7 @@ except Exception as e :
 # Default route to /
 @app.route("/", methods = ['GET', 'POST'])
 def index():
-    return jsonify(token)
+    return jsonify("flask")
 
 @app.route("/services", methods = ['GET', 'POST'])
 def services():
