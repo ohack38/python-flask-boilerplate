@@ -1,4 +1,4 @@
-@baseUrl=https://sheltered-beach-83949.herokuapp.com/
+@baseUrl=https://sheltered-beach-83949.herokuapp.com
 @nodeProdUrl=https://moln-node.azurewebsites.net
 @nodeUrl=http://localhost:3000
 //@baseUrl=http://127.0.0.1:5000
