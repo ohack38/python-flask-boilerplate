@@ -34,8 +34,7 @@ try:
 
     response = requests.post(url, headers=header, json=body)
 
-    auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTUyMDU3MGU2NjI4ZjUxZDY5ODg4MGUiLCJlbWFpbCI6InRvbW15c2hlbGJ5QGRvZS5jb20iLCJpYXQiOjE2MzQ1NTYzMDMsImV4cCI6MTYzNDY0MjcwM30.EEl_ckP0F-VmfhwZmpUd4O76bea61Llc1rA4M-MGa60'
-    token = response.content.decode('utf-8')
+    auth_token = response.content.decode('utf-8')
 
 
 except Exception as e :
