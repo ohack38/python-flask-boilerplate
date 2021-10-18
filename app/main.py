@@ -1,4 +1,3 @@
-from datetime import date
 import os, requests, json
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
@@ -17,7 +16,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-auth_token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTUyMDU3MGU2NjI4ZjUxZDY5ODg4MGUiLCJlbWFpbCI6InRvbW15c2hlbGJ5QGRvZS5jb20iLCJpYXQiOjE2MzQyMDM2OTUsImV4cCI6MTYzNDI5MDA5NX0.4G9uwdmEICXX8Wa6GYC9fLBy9Ud19qs9jo4IabezpaM'
 
 class Services(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,6 +27,18 @@ class Orders(db.Model):
     cabin_id = db.Column(db.String(255), nullable=False)
     date = db.Column(db.DateTime(), default=db.func.now())
 
+try:
+    url = 'https://moln-node.azurewebsites.net/users/login'
+    header = { 'Content-Type': 'application/json' }
+    body = {"email": "tommyshelby@doe.com", "password": os.environ.get('AUTH_PASSWORD')}
+
+    response = requests.post(url, headers=header, json=body)
+
+    auth_token = response.content.decode('utf-8')
+
+
+except Exception as e :
+    print(e)
 
 # Default route to /
 @app.route("/", methods = ['GET', 'POST'])
