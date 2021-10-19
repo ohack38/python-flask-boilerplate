@@ -157,7 +157,7 @@ def cabins():
     try:
         print('GET cabins')
         url = 'https://moln-node.azurewebsites.net/cabins/owned'
-        header = { 'Authorization': 'Bearer {}'.format(auth_token)}
+        header = { 'Authorization': 'Bearer {}'.format(request.headers['Authorization'])}
         response = requests.get(url, headers=header)
         print(response)
         return jsonify(response.json())
