@@ -26,6 +26,7 @@ Content-Type: application/json
 
 ###TEST
 GET {{baseUrl}}/cabins
+Authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTUyMDU3MGU2NjI4ZjUxZDY5ODg4MGUiLCJlbWFpbCI6InRvbW15c2hlbGJ5QGRvZS5jb20iLCJpYXQiOjE2MzQ2NDcwMTYsImV4cCI6MTYzNDczMzQxNn0.6vsl7PktzvP21tgjR0RLOg2ltubq_Ax6bRMGBgw7iuM
 
 ###SERVICES
 GET {{baseUrl}}/services

@@ -32,7 +32,7 @@ class Orders(db.Model):
     cabin_id = db.Column(db.String(255), nullable=False)
     date = db.Column(db.DateTime(), default=db.func.now())
 
-try:
+""" try:
     url = 'https://moln-node.azurewebsites.net/users/login'
     header = { 'Content-Type': 'application/json' }
     body = {"email": "tommyshelby@doe.com", "password": os.environ.get('AUTH_PASSWORD')}
@@ -40,11 +40,11 @@ try:
     response = requests.post(url, headers=header, json=body)
 
     auth_token = response.content.decode('utf-8')
-    print(auth_token)
+    
 
 except Exception as e :
     print(e)
-
+ """
 # Default route to /
 @app.route("/", methods = ['GET', 'POST'])
 def index():
@@ -103,7 +103,7 @@ def orders():
         try:
             body = request.get_json()
             url = 'https://moln-node.azurewebsites.net/cabins/owned/{}'.format(body['cabin_id'])
-            header = { 'Authorization': 'Bearer {}'.format(auth_token)}
+            header = { 'Authorization': 'Bearer {}'.format(request.headers['Authorization'])}
             response = requests.get(url, headers=header)
             
             services = []
