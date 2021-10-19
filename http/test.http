@@ -35,7 +35,7 @@ POST {{baseUrl}}/services
 Content-Type: application/json
 
 {
-    "service": "lawn mowing"
+    "service": "taxi palvelu"
 }
 
 ###
@@ -47,7 +47,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{baseUrl}}/services/4
+DELETE {{baseUrl}}/services/10
 
 ###ORDERS
 GET {{baseUrl}}/orders
@@ -58,8 +58,8 @@ Content-Type: application/json
 
 {
     "service": "roof cleaning",
-    "cabin_id": "6155798243d4392e67def2ee",
-    "date": "2021-10-12"
+    "cabin_id": "6155798243d4392e67def2e",
+    "date": "2022-05-05"
 }
 
 ###
@@ -68,8 +68,8 @@ Content-Type: application/json
 
 {
     "service" : "roof cleaning",
-    "date": ""
+    "date": "2022-09-09"
 }
 
 ###
-DELETE {{baseUrl}}/orders/6
+DELETE {{baseUrl}}/orders/2

@@ -40,7 +40,7 @@ try:
     response = requests.post(url, headers=header, json=body)
 
     auth_token = response.content.decode('utf-8')
-
+    print(auth_token)
 
 except Exception as e :
     print(e)
