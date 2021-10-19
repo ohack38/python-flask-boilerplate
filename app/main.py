@@ -1,6 +1,7 @@
 import os, requests, json
 from flask import Flask, jsonify, request
 from dotenv import load_dotenv
+from flask_cors import CORS
 
 from flask_sqlalchemy import SQLAlchemy
 
@@ -12,6 +13,7 @@ load_dotenv()
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
+CORS(app)
 # Was not possible to change database url in heroku configs for some reason... therefore sum hacking
 db_url = os.environ.get('DATABASE_URL')
 if db_url and db_url.startswith("postgres://"):
