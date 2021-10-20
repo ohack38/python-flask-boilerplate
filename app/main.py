@@ -104,21 +104,25 @@ def orders():
     if request.method == 'POST':
         try:
             body = request.get_json()
+            print(body)
             url = 'https://moln-node.azurewebsites.net/cabins/owned/{}'.format(body['cabin_id'])
-            header = { 'Authorization': 'Bearer {}'.format(request.headers['Authorization'])}
+            header = { 'Authorization': 'Bearer {}'.format('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTUyMDU3MGU2NjI4ZjUxZDY5ODg4MGUiLCJlbWFpbCI6InRvbW15c2hlbGJ5QGRvZS5jb20iLCJpYXQiOjE2MzQ3MDU0NzEsImV4cCI6MTYzNDc5MTg3MX0.kuVvdMF2nj0VeJ1rTSgBY4XByP4OL1ghN2P6tUVjIzQ')}
             response = requests.get(url, headers=header)
-            
+            print('2')
+            print(response.json())
             services = []
             for s in Services.query.filter_by(service=body['service']):
                 services.append(s.service)
-
+            
             if body['cabin_id'] in response.json().values() and len(services)>0:
+                print('3')
                 new_order = Orders(service=body['service'], cabin_id=body['cabin_id'], date=body['date'])
                 db.session.add(new_order)
                 db.session.commit()
                 ret = ['Service ordered']
-
+                print('4')
         except Exception as e:
+            print('e')
             return e
 
     return jsonify(ret)
@@ -126,7 +130,6 @@ def orders():
 @app.route("/orders/<id>", methods = ['PUT', 'DELETE'])
 def filtered_orders(id):
     ret = []
-  
     if request.method == 'PUT':
         body = request.get_json()
         update_order = Orders.query.filter_by(id=id).first_or_404()

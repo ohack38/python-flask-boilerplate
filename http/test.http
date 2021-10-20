@@ -2,7 +2,7 @@
 @nodeProdUrl=https://moln-node.azurewebsites.net
 @nodeUrl=http://localhost:3000
 //@baseUrl=http://127.0.0.1:5000
-
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2MTUyMDU3MGU2NjI4ZjUxZDY5ODg4MGUiLCJlbWFpbCI6InRvbW15c2hlbGJ5QGRvZS5jb20iLCJpYXQiOjE2MzQ3MTU4NjcsImV4cCI6MTYzNDgwMjI2N30.esAmtPQjUw8mrpErQqDzKxKmu29VmG7Oo1tz1nU5YaE
 ###
 GET {{nodeProdUrl}}
 
@@ -60,17 +60,17 @@ Content-Type: application/json
 {
     "service": "roof cleaning",
     "cabin_id": "6155798243d4392e67def2e",
-    "date": "2022-05-05"
+    "date": "2020-05-05"
 }
 
 ###
-PUT {{baseUrl}}/orders/4
+PUT {{baseUrl}}/orders/5
 Content-Type: application/json
 
 {
-    "service" : "roof cleaning",
-    "date": "2022-09-09"
+    "service" : "taxi",
+    "date": "10-20-2020"
 }
 
 ###
-DELETE {{baseUrl}}/orders/2
+DELETE {{baseUrl}}/orders/8
